@@ -720,20 +720,25 @@
             box-sizing: border-box;
         }
         .annex-modal-close {
-            position: absolute; top: 15px; right: 15px;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.15);
-            color: #9a9a9a;
-            width: 32px; height: 32px;
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(212,180,131,0.15);
+            border: 1px solid rgba(212,180,131,0.5);
+            color: #d4b483;
+            width: 38px; height: 38px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 20px;
+            font-weight: 300;
             transition: all 0.3s ease;
             z-index: 5;
+            backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center;
         }
         .annex-modal-close:hover {
-            border-color: var(--color-primary);
-            color: var(--color-primary);
+            background: #d4b483;
+            color: #0c0c0d;
+            border-color: #d4b483;
+            transform: rotate(90deg);
         }
         .annex-lock-icon {
             font-family: 'Cormorant Garamond', serif;
@@ -1626,7 +1631,10 @@
                         <span class="annex-card-btn" data-es="ACCEDER" data-en="ACCESS">ACCEDER</span>
                     </a>
                 </div>
-                <button class="annex-back-pin" onclick="backToAnnexPin()" data-es="← Cerrar sesión y volver al PIN" data-en="← Log out and return to PIN">← Cerrar sesión y volver al PIN</button>
+                <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px;">
+                    <button class="annex-back-pin" onclick="closeAnnexAndBackToCarousel()" style="border-color:#d4b483; color:#d4b483; font-weight:600;" data-es="← Volver al Menú" data-en="← Back to Menu">← Volver al Menú</button>
+                    <button class="annex-back-pin" onclick="backToAnnexPin()" data-es="↻ Volver al PIN" data-en="↻ Back to PIN">↻ Volver al PIN</button>
+                </div>
             </div>
         </div>
     </div>
@@ -2007,7 +2015,15 @@
                 if (input) input.focus();
             }, 200);
         }
+
+        // Cierra el modal de anexos y vuelve al carrusel (donde estaba la tarjeta sellada).
+        // Es el botón "← Volver al Menú" que el usuario pide para salir de los anexos
+        // y volver a la navegación normal del dashboard.
+        function closeAnnexAndBackToCarousel() {
+            closeSealedModal();
+        }
     </script>
 </body>
 </html>
+
 
