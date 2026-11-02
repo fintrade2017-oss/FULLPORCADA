@@ -708,7 +708,8 @@
 
         /* ============ MODAL ANEXOS OPERATIVOS (PIN + GRID) ============ */
         .annex-modal-inner {
-            background: linear-gradient(135deg, #16161a 0%, #0c0c0d 100%);
+            background: linear-gradient(135deg, rgba(22,22,26,0.92) 0%, rgba(12,12,13,0.92) 100%);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(212,180,131,0.4);
             border-radius: 6px;
             max-width: 720px;
@@ -851,8 +852,8 @@
             .annex-grid { grid-template-columns: 1fr; }
         }
         .annex-card {
-            background: rgba(22, 22, 26, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(22, 22, 26, 0.72);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.08);
             padding: 24px 20px;
             border-radius: 2px;
@@ -1568,11 +1569,11 @@
     </footer>
 
     <!-- MODAL ANEXOS OPERATIVOS (PIN + GRID DE ENLACES) -->
-    <div id="sealedModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); overflow-y:auto; padding:20px; box-sizing:border-box;">
+    <div id="sealedModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.55); backdrop-filter:blur(6px); overflow-y:auto; padding:20px; box-sizing:border-box;">
         <div class="annex-modal-inner" style="margin:auto; min-height:auto;">
 
             <!-- BARRA SUPERIOR FIJA CON BOTÓN VOLVER (siempre visible) -->
-            <div style="position:sticky; top:0; z-index:20; background:linear-gradient(135deg, #16161a 0%, #0c0c0d 100%); padding:12px 0 12px 0; margin:-50px -40px 20px -40px; padding-left:40px; padding-right:40px; border-bottom:1px solid rgba(212,180,131,0.2); display:flex; justify-content:space-between; align-items:center; gap:12px;">
+            <div style="position:sticky; top:0; z-index:20; background:linear-gradient(135deg, rgba(22,22,26,0.95) 0%, rgba(12,12,13,0.95) 100%); backdrop-filter:blur(10px); padding:12px 0 12px 0; margin:-50px -40px 20px -40px; padding-left:40px; padding-right:40px; border-bottom:1px solid rgba(212,180,131,0.2); display:flex; justify-content:space-between; align-items:center; gap:12px;">
                 <button class="annex-back-pin" onclick="closeAnnexAndBackToCarousel()" style="border-color:#d4b483; color:#d4b483; font-weight:600; margin:0;" data-es="← Volver al Menú" data-en="← Back to Menu">← Volver al Menú</button>
                 <span style="font-family:'Cormorant Garamond', serif; color:#d4b483; font-size:0.9rem; letter-spacing:2px; text-transform:uppercase; opacity:0.7;" data-es="Anexos Operativos" data-en="Operational Annexes">Anexos Operativos</span>
                 <button class="annex-modal-close" onclick="closeSealedModal()" style="position:relative; top:auto; right:auto; flex-shrink:0;">×</button>
@@ -2031,6 +2032,7 @@
     </script>
 </body>
 </html>
+
 
 
 
