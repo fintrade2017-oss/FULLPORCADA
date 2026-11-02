@@ -1168,6 +1168,7 @@
         <div class="top-bar">
             <button class="mute-btn" onclick="toggleMute()" id="muteBtn">🔊 Mute</button>
             <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🌐 English</button>
+            <button class="mute-btn" onclick="logoutToLock()" id="logoutBtn" style="display:none;" data-es="⏏ Menú" data-en="⏏ Menu">⏏ Menú</button>
         </div>
 
         <!-- LOCK SCREEN -->
@@ -1618,6 +1619,12 @@
                         <p class="annex-card-desc" data-es="Spa &amp; bienestar · terapias del manglar · medicina natural del Pacífico panameño" data-en="Spa &amp; wellness · mangrove therapies · natural medicine of the Panamanian Pacific">Spa &amp; bienestar · terapias del manglar · medicina natural del Pacífico panameño</p>
                         <span class="annex-card-btn" data-es="ACCEDER" data-en="ACCESS">ACCEDER</span>
                     </a>
+                    <a href="https://visualporcada.netlify.app/" class="annex-card" target="_blank" rel="noopener noreferrer">
+                        <div class="annex-card-num">VI</div>
+                        <h4 class="annex-card-title" data-es="Visual La Porcada" data-en="Visual La Porcada">Visual La Porcada</h4>
+                        <p class="annex-card-desc" data-es="Video del interior de la isla hoy · antes de la ejecución del proyecto EcoResort" data-en="Video of the island's interior today · before the EcoResort project execution">Video del interior de la isla hoy · antes de la ejecución del proyecto EcoResort</p>
+                        <span class="annex-card-btn" data-es="ACCEDER" data-en="ACCESS">ACCEDER</span>
+                    </a>
                 </div>
                 <button class="annex-back-pin" onclick="backToAnnexPin()" data-es="← Cerrar sesión y volver al PIN" data-en="← Log out and return to PIN">← Cerrar sesión y volver al PIN</button>
             </div>
@@ -1648,11 +1655,61 @@
                 dashboard.style.display = 'flex';
                 bgVideo.style.display = 'block'; // Mostrar el fondo de manglares
                 startBackgroundMusic(); // Arrancar la música
+                showLogoutButton(true); // Mostrar botón de volver al menú / cerrar sesión
             } else {
                 errorMsg.innerText = currentLang === 'ES' ? 'Clave incorrecta. Acceso denegado.' : 'Incorrect key. Access denied.';
                 form.classList.add('shake');
                 setTimeout(() => form.classList.remove('shake'), 300);
             }
+        }
+
+        // ============ BOTÓN VOLVER AL MENÚ / CERRAR SESIÓN ============
+        // Muestra u oculta el botón de logout en el top-bar.
+        // Se muestra cuando el usuario entra al dashboard (tras password correcta),
+        // y se oculta cuando vuelve al lock screen.
+        function showLogoutButton(show) {
+            const btn = document.getElementById('logoutBtn');
+            if (!btn) return;
+            btn.style.display = show ? 'inline-block' : 'none';
+        }
+
+        // Vuelve al lock screen (menú de contraseña) desde cualquier vista del dashboard.
+        // Cierra modales abiertos, resetea el carrusel al hub y detiene la música.
+        function logoutToLock() {
+            // Cerrar cualquier modal abierto (anexos, cierre cinematográfico)
+            closeSealedModal();
+            closeClosingOverlay();
+            // Reset del cierre cinematográfico
+            resetClosingState();
+            // Volver al hub si estamos en el carrusel
+            const carouselView = document.getElementById('carouselView');
+            const hubView = document.getElementById('hubView');
+            if (carouselView && carouselView.style.display === 'flex') {
+                clearInterval(autoSlideInterval);
+                document.querySelectorAll('.carousel-slide').forEach(slide => slide.classList.remove('active'));
+                carouselView.style.display = 'none';
+                if (hubView) hubView.style.display = 'block';
+            }
+            // Ocultar dashboard y mostrar lock screen
+            const dashboard = document.getElementById('dashboard');
+            const lockScreen = document.getElementById('lockScreen');
+            const bgVideo = document.getElementById('bgVideoWrapper');
+            if (dashboard) dashboard.style.display = 'none';
+            if (lockScreen) lockScreen.style.display = 'flex';
+            // Mantener el fondo de manglares visible (efecto cinematográfico) o ocultarlo
+            if (bgVideo) bgVideo.style.display = 'none';
+            // Detener música
+            const audio = document.getElementById('backgroundAudio');
+            if (audio) { audio.pause(); audio.currentTime = 0; }
+            // Ocultar botón logout
+            showLogoutButton(false);
+            // Limpiar campo de contraseña
+            const passInput = document.getElementById('passInput');
+            const errorMsg = document.getElementById('errorMsg');
+            if (passInput) passInput.value = '';
+            if (errorMsg) errorMsg.innerText = '';
+            // Focus en el campo de contraseña
+            if (passInput) setTimeout(() => passInput.focus(), 100);
         }
 
         // LÓGICA DE MÚSICA AMBIENTAL
@@ -1953,3 +2010,4 @@
     </script>
 </body>
 </html>
+
